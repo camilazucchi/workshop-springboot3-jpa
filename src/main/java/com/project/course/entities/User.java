@@ -8,4 +8,15 @@ public class User {
     private String phone;
     private String password;
 
+    public User() {
+    }
+
+    public User(Long id, String name, String email, String phone, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+    }
+
 }
