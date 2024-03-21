@@ -1,13 +1,29 @@
 package com.project.course.entities;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 /* Quando uma classe implementa a interface "Serializable" em Java, isso significa que os objetos dessa classe podem
  * ser convertidos em uma sequência de bytes. Essa sequência de bytes pode ser posteriormente gravada em um arquivo,
  * transmitida pela rede ou armazenada na memória de forma persistente. */
+@Entity
+/* A anotação "@Entity" é usada para marcar uma classe Java como uma entidade persistente. Isso significa que cada
+ * instância dessa classe representa uma entrada única em uma tabela de banco de dados. */
+@Table(name = "tb_user")
+/* A anotação "@Table" é usada para especificar o nome da tabela no banco de dados para qual a entidade será mapeada. */
 public class User implements Serializable {
 
+    @Id
+    /* A anotação "@Id" é usada para marcar o campo que serve como a chave primária da entidade. Cada entidade deve
+     * ter uma chave primária única que a identifica na tabela do banco de dados. */
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /* A anotação "@GeneratedValue" é usada para especificar a estratégia de geração de valores para chaves primárias
+     * em banco de dados relacionais.
+     * A estratégia "GenerationType.IDENTITY" indica que o valor da chave primária será gerado pelo próprio banco de
+     * dados, aproveitando funcionalidades nativas de autoincremento ou identidade. Isso significa que o banco de dados
+     * atribuirá automaticamente um valor à chave primária quando uma nova linha for inserida na tabela correspondente. */
     private Long id;
     private String name;
     private String email;
