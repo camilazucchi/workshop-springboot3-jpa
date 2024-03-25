@@ -3,6 +3,8 @@ package com.project.course.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /* Quando uma classe implementa a interface "Serializable" em Java, isso significa que os objetos dessa classe podem
@@ -29,6 +31,12 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+
+    @OneToMany(mappedBy = "client")
+    /* A anotação "@OneToMany" é usada para definir um relacionamento onde uma entidade possui uma coleção de
+    * instâncias de outra entidade. Aqui, por exemplo, uma entidade cliente (User) pode ter uma coleção de
+    * pedidos (Order). */
+    private final List<Order> orders = new ArrayList<>();
 
     public User() {
     }
@@ -79,6 +87,11 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /* Tratando-se de listas, adicionamos apenas o método get e não o set! */
+    public List<Order> getOrders() {
+        return orders;
     }
 
     /* Esses métodos são comumente usados em Java para implementar a comparação de igualdade e gerar um código hash
