@@ -23,7 +23,7 @@ public class Order implements Serializable {
      * - Shape: especifica a forma como o valor do campo deve ser serializado.
      * - Pattern: define o padrão para formatar data e hora.
      * - Timezone: especifica o fuso horário que deve ser usado ao serializar/desserializar a data e hora. */
-    private Instant instant;
+    private Instant moment;
 
     @ManyToOne
     /* A anotação "@ManyToOne" é usada para mapear um relacionamento muitos-para-um entre duas entidades em um banco
@@ -37,9 +37,9 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(Long id, Instant instant, User client) {
+    public Order(Long id, Instant moment, User client) {
         this.id = id;
-        this.instant = instant;
+        this.moment = moment;
         this.client = client;
     }
 
@@ -51,12 +51,12 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Instant getInstant() {
-        return instant;
+    public Instant getMoment() {
+        return moment;
     }
 
-    public void setInstant(Instant instant) {
-        this.instant = instant;
+    public void setMoment(Instant moment) {
+        this.moment = moment;
     }
 
     public User getClient() {
