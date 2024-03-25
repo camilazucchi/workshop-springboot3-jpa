@@ -16,7 +16,7 @@ import java.util.Optional;
 /* A anotação "@RestController" é uma anotação específica do Spring Framework em Java, geralmente usada em aplicativos
  * web para definir controladores que tratam solicitações HTTP e retornam respostas HTTP, especialmente em aplicações
  * RESTful. */
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/orders")
 /* A anotação "@RequestMapping" é usada para mapear um endpoint específico em uma classe controladora (como uma classe
  * marcada com "@RestController") para uma determinada URL. */
 public class OrderResource {
@@ -31,8 +31,8 @@ public class OrderResource {
     @GetMapping
     /* A anotação "@GetMapping" define uma rota que responde a requisições HTTP GET. */
     public ResponseEntity<List<Order>> findAll() {
-        List<Order> users = service.findAll();
-        return ResponseEntity.ok().body(users);
+        List<Order> orders = service.findAll();
+        return ResponseEntity.ok().body(orders);
     }
 
     @GetMapping(value = "/{id}")
