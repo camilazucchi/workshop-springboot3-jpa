@@ -1,5 +1,6 @@
 package com.project.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -16,6 +17,12 @@ public class Order implements Serializable {
     /* Antes da versão 8 do Java, para instanciar um instante usávamos a classe Date, mas a partir da versão 8, surgiu
      * a classe Instant, sendo melhor que Date no nosso caso.
      * https://stackoverflow.com/questions/32437550/whats-the-difference-between-instant-and-localdatetime */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss'Z'", timezone = "GMT")
+    /* A anotação "@JsonFormat" é usada para definir o formato de serialização/desserialização de campos de data e hora
+     * quando convertidos para JSON e vice-versa.
+     * - Shape: especifica a forma como o valor do campo deve ser serializado.
+     * - Pattern: define o padrão para formatar data e hora.
+     * - Timezone: especifica o fuso horário que deve ser usado ao serializar/desserializar a data e hora. */
     private Instant instant;
 
     @ManyToOne
@@ -33,6 +40,30 @@ public class Order implements Serializable {
     public Order(Long id, Instant instant, User client) {
         this.id = id;
         this.instant = instant;
+        this.client = client;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Instant getInstant() {
+        return instant;
+    }
+
+    public void setInstant(Instant instant) {
+        this.instant = instant;
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
         this.client = client;
     }
 
