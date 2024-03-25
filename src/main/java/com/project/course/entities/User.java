@@ -1,5 +1,6 @@
 package com.project.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -32,10 +33,14 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    @JsonIgnore
+    /* A anotação "@JsonIgnore" instrui o mecanismo de serialização a ignorar um determinado campo ou método durante
+     * o processo de conversão entre objetos Java e JSON. Isso significa que o campo ou método anotado não será
+     * incluído no JSON resultante quando um objeto Java é serializado em JSON. */
     @OneToMany(mappedBy = "client")
     /* A anotação "@OneToMany" é usada para definir um relacionamento onde uma entidade possui uma coleção de
-    * instâncias de outra entidade. Aqui, por exemplo, uma entidade cliente (User) pode ter uma coleção de
-    * pedidos (Order). */
+     * instâncias de outra entidade. Aqui, por exemplo, uma entidade cliente (User) pode ter uma coleção de
+     * pedidos (Order). */
     private final List<Order> orders = new ArrayList<>();
 
     public User() {
