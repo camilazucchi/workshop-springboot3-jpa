@@ -66,7 +66,7 @@ public class TestConfig implements CommandLineRunner {
                 "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
         Product p4 = new Product(null, "PC Gamer",
                 "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
-        Product p5 = new Product(null, "Rails for Dummies",
+        Product p5 = new Product(null, "Blush Rare Beauty",
                 "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
         // Salvando no banco de dados:
@@ -74,6 +74,17 @@ public class TestConfig implements CommandLineRunner {
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        // Associações:
+        p1.getCategories().add(cat2);
+        p2.getCategories().add(cat1);
+        p3.getCategories().add(cat1);
+        p4.getCategories().add(cat1);
+        p5.getCategories().add(cat3);
+
+        // Salvando os produtos novamente com as associações feitas anteriormente:
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
 
     }
 
