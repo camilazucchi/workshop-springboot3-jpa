@@ -22,6 +22,20 @@ public class Product implements Serializable {
     /* Ao invés de utilizarmos List aqui, utilizamos Set, pois Set não permite elementos duplicados. Desta forma, não
      * corremos o risco de termos um produto com categorias duplicadas.
      * Além disso, instanciamos a coleção para que ela não comece com valor "null" e sim vazia. */
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    /* Esse trecho de código está definindo um relacionamento muitos-para-muitos entre produtos e categorias,
+     * utilizando uma tabela de junção para representar esse relacionamento no banco de dados.
+     * - "@ManyToMany": indica que há um relacionamento muitos-para-muitos entre as entidades "Product" e "Category".
+     * Isso significa que um produto pode pertencer a várias categorias e uma categoria pode ter vários produtos.
+     * - "@JoinTable": é usada para especificar os detalhes da tabela de junção que será criada para representar o
+     * relacionamento muitos-para-muitos no banco de dados. A tabela de junção acima é chamada de "tb_product_category".
+     * - "joinColumns" e "inverseJoinColumns": esses parâmetros especificam os nomes das colunas que serão usadas para
+     * mapear o relacionamento. "joinColumns" se refere à coluna que irá conter as chaves estrangeiras da entidade
+     * atual ("Product"), enquanto "inverseJoinColumns" se refere à coluna que irá conter as chaves estrangeiras da
+     * outra entidade ("Category"). */
     private final Set<Category> categories = new HashSet<>();
 
     public Product() {
