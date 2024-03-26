@@ -19,7 +19,7 @@ public class OrderService {
     }
 
     /* Este método retorna uma lista de todos os usuários presentes no banco de dados. Ele faz isso chamando o método
-     * "findAll()" do "UserRepository", que é uma interface fornecida pelo Spring Data JPA. */
+     * "findAll()" do "OrderRepository", que é uma interface fornecida pelo Spring Data JPA. */
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
