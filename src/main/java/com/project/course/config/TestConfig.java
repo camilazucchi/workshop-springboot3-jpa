@@ -1,14 +1,8 @@
 package com.project.course.config;
 
-import com.project.course.entities.Category;
-import com.project.course.entities.Order;
-import com.project.course.entities.Product;
-import com.project.course.entities.User;
+import com.project.course.entities.*;
 import com.project.course.enums.OrderStatus;
-import com.project.course.repositories.CategoryRepository;
-import com.project.course.repositories.OrderRepository;
-import com.project.course.repositories.ProductRepository;
-import com.project.course.repositories.UserRepository;
+import com.project.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +21,7 @@ public class TestConfig implements CommandLineRunner {
     private final OrderRepository orderRepository;
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Autowired
     /* A anotação "@Autowired" é usada para realizar a injeção de dependência automaticamente em classes gerenciadas
@@ -34,11 +29,13 @@ public class TestConfig implements CommandLineRunner {
      * Quando usamos essa anotação o Spring procura automaticamente por uma instância correspondente do tipo do campo
      * ou parâmetro e a injeta nesse ponto de injeção. */
     public TestConfig(UserRepository userRepository, OrderRepository orderRepository,
-                      CategoryRepository categoryRepository, ProductRepository productRepository) {
+                      CategoryRepository categoryRepository, ProductRepository productRepository,
+                      OrderItemRepository orderItemRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     /* Quando a aplicação é iniciada, ela insere dois usuários no banco de dados usando o método "saveAll" do
@@ -84,6 +81,19 @@ public class TestConfig implements CommandLineRunner {
 
         // Salvando os produtos novamente com as associações feitas anteriormente:
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        // Criação de quatro objetos do tipo OrderItem:
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p4.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p1.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        // Salvando os objetos do tipo OrderItem:
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
+
+
+
 
 
     }
