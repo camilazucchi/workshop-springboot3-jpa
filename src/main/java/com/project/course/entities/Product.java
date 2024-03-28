@@ -1,5 +1,6 @@
 package com.project.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -37,6 +38,8 @@ public class Product implements Serializable {
      * atual ("Product"), enquanto "inverseJoinColumns" se refere à coluna que irá conter as chaves estrangeiras da
      * outra entidade ("Category"). */
     private final Set<Category> categories = new HashSet<>();
+    @OneToMany(mappedBy = "id.product")
+    private final Set<OrderItem> items = new HashSet<>();
 
     public Product() {
     }
@@ -93,6 +96,16 @@ public class Product implements Serializable {
 
     public Set<Category> getCategories() {
         return categories;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        // Percorre a coleção "items" e adiciona para cada elemento dessa coleção o "x.getOrder()":
+        for (OrderItem x : items) {
+            set.add(x.getOrder());
+        }
+        return set;
     }
 
     @Override
