@@ -2,6 +2,7 @@ package com.project.course.services;
 
 import com.project.course.entities.User;
 import com.project.course.repositories.UserRepository;
+import com.project.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,9 @@ public class UserService {
     /* O tipo "Optional" foi introduzido no Java para lidar de forma mais segura e expressiva com valores que podem
      * estar ausentes. Ele permite indicar explicitamente que um valor pode estar presente ou ausente, evitando assim
      * exceções de "NullPointerException". */
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     /* Este método recebe um objeto do tipo "User", o salva no banco de dados usando um repositório e depois retorna
