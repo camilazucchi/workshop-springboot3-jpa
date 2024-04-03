@@ -1,5 +1,6 @@
 package com.project.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public class Payment implements Serializable {
     /* A anotação "@MapsId" é usada para mapear a chave primária de uma entidade filho (ou dependente) com a chave
      * primária da entidade pai (ou proprietária). Isso é útil quando desejamos compartilhar a mesma chave primária
      * entre a entidade pai e a entidade filho. */
+    @JsonIgnore
     private Order order;
 
     public Payment() {
