@@ -31,4 +31,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    /* Este método recebe um objeto do tipo "User", o salva no banco de dados usando um repositório e depois retorna
+     * o objeto "User" salvo. */
+    public User insertUser(User user) {
+        return userRepository.save(user);
+    }
+
 }

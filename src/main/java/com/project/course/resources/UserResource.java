@@ -4,10 +4,7 @@ import com.project.course.entities.User;
 import com.project.course.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +26,8 @@ public class UserResource {
     }
 
     @GetMapping
-    /* A anotação "@GetMapping" define uma rota que responde a requisições HTTP GET. */
+    /* A anotação "@GetMapping" define uma rota que responde a requisições HTTP GET.
+     * Para recuperar dados do banco de dados, utilizamos o método GET do HTTP! */
     public ResponseEntity<List<User>> findAll() {
         List<User> users = service.findAll();
         return ResponseEntity.ok().body(users);
@@ -40,5 +38,15 @@ public class UserResource {
         Optional<User> object = service.findById(id);
         return ResponseEntity.ok().body(object);
     }
+
+    /* Para inserir um novo recurso no banco de dados, utilizamos o método POST do HTTP! */
+    @PostMapping
+    /* A anotação "@PostMapping" é utilizada para mapear solicitações POST para métodos específicos em classes de
+     * controle no Spring Framework. */
+    public ResponseEntity<User> insertUser(@RequestBody User user) {
+        user = service.insertUser(user);
+        return ResponseEntity.ok().body(user);
+    }
+
 
 }
