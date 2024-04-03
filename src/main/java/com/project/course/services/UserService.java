@@ -42,4 +42,19 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public User updateUser(Long id, User user) {
+        User entity = userRepository.getReferenceById(id);
+        /* A função básica do método "getReferenceById" é retornar uma referência para uma entidade no banco de dados
+         * com base no seu identificador único (ID), sem realmente acessar o banco de dados. Em outras palavras, ele
+         * cria um proxy para a entidade desejada, sem carregar todos os seus dados do banco de dados. */
+        updateData(entity, user);
+        return userRepository.save(entity);
+    }
+
+    private void updateData(User entity, User user) {
+        entity.setName(user.getName());
+        entity.setEmail(user.getEmail());
+        entity.setPhone(user.getPhone());
+    }
+
 }
