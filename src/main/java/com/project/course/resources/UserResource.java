@@ -5,7 +5,9 @@ import com.project.course.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +47,18 @@ public class UserResource {
      * controle no Spring Framework. */
     public ResponseEntity<User> insertUser(@RequestBody User user) {
         user = service.insertUser(user);
-        return ResponseEntity.ok().body(user);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getId())
+                .toUri();
+        /* A linha de código acima serve para criar um URI para o novo usuário que foi inserido.
+         * "ServletUriComponentBuilder" é uma classe do Spring que ajuda a construir URIs a partir das informações
+         * da solicitação atual. Neste caso, está sendo utilizado o URI da solicitação e adicionando "/{id}" ao final.
+         * Em ".buildAndExpand(user.getId())" é adicionado o ID do novo usuário à URI. Isso significa que a URI do
+         * usuário terá o formato "/users/{id}", onde "{id}" será o ID do usuário recém-criado.
+         * Já o método "toUri()" converte a URI construída em um objeto URI. */
+        return ResponseEntity.created(uri).body(user);
     }
 
 
