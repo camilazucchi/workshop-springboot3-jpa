@@ -61,5 +61,13 @@ public class UserResource {
         return ResponseEntity.created(uri).body(user);
     }
 
+    @DeleteMapping(value = "/{id}")
+    /* A resposta dessa requisição não irá nos retornar nenhum corpo, por isso, utilizamos "void"! */
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        service.deleteUser(id);
+        /* O código HTTP de uma resposta que não possui conteúdo é o 204! */
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

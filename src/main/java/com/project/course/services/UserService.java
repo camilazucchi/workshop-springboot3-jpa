@@ -37,4 +37,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /* Este método deleta um usuário do banco de dados. */
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }
