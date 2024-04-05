@@ -6,6 +6,7 @@ import com.project.course.resources.exceptions.ResourceExceptionHandler;
 import com.project.course.resources.exceptions.StandardError;
 import com.project.course.services.exceptions.DatabaseException;
 import com.project.course.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -59,12 +60,16 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user) {
-        User entity = userRepository.getReferenceById(id);
-        /* A função básica do método "getReferenceById" é retornar uma referência para uma entidade no banco de dados
-         * com base no seu identificador único (ID), sem realmente acessar o banco de dados. Em outras palavras, ele
-         * cria um proxy para a entidade desejada, sem carregar todos os seus dados do banco de dados. */
-        updateData(entity, user);
-        return userRepository.save(entity);
+        try {
+            User entity = userRepository.getReferenceById(id);
+            /* A função básica do método "getReferenceById" é retornar uma referência para uma entidade no banco de dados
+             * com base no seu identificador único (ID), sem realmente acessar o banco de dados. Em outras palavras, ele
+             * cria um proxy para a entidade desejada, sem carregar todos os seus dados do banco de dados. */
+            updateData(entity, user);
+            return userRepository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User entity, User user) {
