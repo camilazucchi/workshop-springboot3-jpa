@@ -2,8 +2,11 @@ package com.project.course.services;
 
 import com.project.course.entities.User;
 import com.project.course.repositories.UserRepository;
+import com.project.course.resources.exceptions.ResourceExceptionHandler;
+import com.project.course.resources.exceptions.StandardError;
 import com.project.course.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +44,12 @@ public class UserService {
 
     /* Este método deleta um usuário do banco de dados. */
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            userRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public User updateUser(Long id, User user) {
